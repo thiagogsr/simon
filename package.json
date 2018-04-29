@@ -4,6 +4,7 @@
   "description": "BTC Atlas Project historic",
   "devDependencies": {
     "css-loader": "^0.28.11",
+    "elm": "^0.18.0",
     "elm-webpack-loader": "^4.5.0",
     "file-loader": "^1.1.11",
     "style-loader": "^0.21.0",
@@ -13,7 +14,7 @@
   },
   "scripts": {
     "build": "webpack",
-    "watch": "webpack-dev-server --port 3000"
+    "watch": "webpack-dev-server --hot --inline --port 3000"
   },
   "repository": {
     "type": "git",
