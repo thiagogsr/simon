@@ -4,7 +4,7 @@ import Html exposing (program)
 import Models exposing (Model, initialModel)
 import Msgs exposing (Msg)
 import Update exposing (update)
-import View exposing (view)
+import Views.App exposing (view)
 
 
 init : ( Model, Cmd Msg )
