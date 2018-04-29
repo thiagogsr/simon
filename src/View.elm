@@ -1,13 +1,14 @@
 module View exposing (view)
 
 import Html exposing (Html, div, program, table, tbody, td, text, th, thead, tr)
-import Models exposing (Entry)
+import Models exposing (Entry, Model)
+import Msgs exposing (Msg)
 
 
-view : List Entry -> Html Msg
-view entries =
+view : Model -> Html Msg
+view model =
     div []
-        [ list entries
+        [ list model.entries
         ]
 
 

@@ -2,7 +2,7 @@ module Models exposing (Entry, Model, initialModel)
 
 
 type Kind
-    = PROFT
+    = PROFIT
     | DEPOSIT
 
 

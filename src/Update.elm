@@ -1,6 +1,9 @@
-module Update exposing (..)
+module Update exposing (update)
+
+import Models exposing (Model)
+import Msgs exposing (Msg)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    model
+    ( model, Cmd.none )
