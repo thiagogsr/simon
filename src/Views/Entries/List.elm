@@ -1,4 +1,4 @@
-module Views.Entries exposing (entries)
+module Views.Entries.List exposing (entries)
 
 import Html exposing (Html, div, table, tbody, td, text, th, thead, tr)
 import Models exposing (Entry)
