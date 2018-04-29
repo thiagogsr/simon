@@ -3,7 +3,7 @@
   "summary": "BTC Atlas Project historic",
   "repository": "https://github.com/thiagogsr/simon.git",
   "license": "MIT",
-  "source-directories": ["."],
+  "source-directories": ["src"],
   "exposed-modules": [],
   "dependencies": {
     "elm-lang/core": "5.1.1 <= v < 6.0.0",
