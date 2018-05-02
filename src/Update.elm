@@ -8,40 +8,44 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         AddEntry ->
-            ( { model | entries = model.entryForm :: model.entries }, Cmd.none )
+            let
+                new =
+                    Entry (model.newEntry.amount) (model.newEntry.date)
+            in
+                ( { model | entries = new :: model.entries }, Cmd.none )
 
         EntryFormAmount amount ->
             let
                 oldEntryForm =
-                    model.entryForm
+                    model.newEntry
 
                 updatedEntry =
                     case String.toFloat amount of
                         Ok amount ->
-                            { oldEntryForm | amount = Just amount }
+                            { oldEntryForm | amount = amount }
 
                         Err error ->
                             oldEntryForm
             in
-            ( { model | entryForm = updatedEntry }, Cmd.none )
+                ( { model | newEntry = updatedEntry }, Cmd.none )
 
         EntryFormDate date ->
             let
                 oldEntryForm =
-                    model.entryForm
+                    model.newEntry
 
                 updatedEntry =
                     if String.isEmpty date then
                         oldEntryForm
                     else
-                        { oldEntryForm | date = Just date }
+                        { oldEntryForm | date = date }
             in
-            ( { model | entryForm = updatedEntry }, Cmd.none )
+                ( { model | newEntry = updatedEntry }, Cmd.none )
 
         EntryFormKind kind ->
             let
                 oldEntryForm =
-                    model.entryForm
+                    model.newEntry
 
                 newKind =
                     if kind == "PROFIT" then
@@ -50,9 +54,9 @@ update msg model =
                         DEPOSIT
 
                 updatedEntry =
-                    { oldEntryForm | kind = Just newKind }
+                    { oldEntryForm | kind = newKind }
             in
-            ( { model | entryForm = updatedEntry }, Cmd.none )
+                ( { model | newEntry = updatedEntry }, Cmd.none )
 
         NoOp ->
             ( model, Cmd.none )
