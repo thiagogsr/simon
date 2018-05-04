@@ -11,8 +11,8 @@ entries model =
         [ table []
             [ thead []
                 [ tr []
-                    [ th [] [ text "Date" ]
-                    , th [] [ text "Amount" ]
+                    [ th [] [ text "Amount" ]
+                    , th [] [ text "Date" ]
                     , th [] [ text "Kind" ]
                     ]
                 ]
@@ -24,7 +24,7 @@ entries model =
 entryRow : Entry -> Html Msg
 entryRow entry =
     tr []
-        [ td [] [ text (toString entry.date) ]
-        , td [] [ text (toString entry.amount) ]
+        [ td [] [ text (toString entry.amount) ]
+        , td [] [ text entry.date ]
         , td [] [ text (toString entry.kind) ]
         ]

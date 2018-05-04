@@ -9,10 +9,19 @@ update msg model =
     case msg of
         AddEntry ->
             let
-                new =
-                    Entry (model.newEntry.amount) (model.newEntry.date)
+                amount =
+                    Result.withDefault 0 (String.toFloat (Maybe.withDefault "0" model.newEntry.amount))
+
+                kind =
+                    if model.newEntry.kind == Just "DEPOSIT" then
+                        DEPOSIT
+                    else
+                        PROFIT
+
+                entry =
+                    Entry amount (Maybe.withDefault "0" model.newEntry.date) kind
             in
-                ( { model | entries = new :: model.entries }, Cmd.none )
+            ( { model | entries = entry :: model.entries }, Cmd.none )
 
         EntryFormAmount amount ->
             let
@@ -20,14 +29,9 @@ update msg model =
                     model.newEntry
 
                 updatedEntry =
-                    case String.toFloat amount of
-                        Ok amount ->
-                            { oldEntryForm | amount = amount }
-
-                        Err error ->
-                            oldEntryForm
+                    { oldEntryForm | amount = Just amount }
             in
-                ( { model | newEntry = updatedEntry }, Cmd.none )
+            ( { model | newEntry = updatedEntry }, Cmd.none )
 
         EntryFormDate date ->
             let
@@ -35,28 +39,19 @@ update msg model =
                     model.newEntry
 
                 updatedEntry =
-                    if String.isEmpty date then
-                        oldEntryForm
-                    else
-                        { oldEntryForm | date = date }
+                    { oldEntryForm | date = Just date }
             in
-                ( { model | newEntry = updatedEntry }, Cmd.none )
+            ( { model | newEntry = updatedEntry }, Cmd.none )
 
         EntryFormKind kind ->
             let
                 oldEntryForm =
                     model.newEntry
 
-                newKind =
-                    if kind == "PROFIT" then
-                        PROFIT
-                    else
-                        DEPOSIT
-
                 updatedEntry =
-                    { oldEntryForm | kind = newKind }
+                    { oldEntryForm | kind = Just kind }
             in
-                ( { model | newEntry = updatedEntry }, Cmd.none )
+            ( { model | newEntry = updatedEntry }, Cmd.none )
 
         NoOp ->
             ( model, Cmd.none )
