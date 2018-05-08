@@ -13,10 +13,15 @@ update msg model =
                     Result.withDefault 0 (String.toFloat (Maybe.withDefault "0" model.newEntry.amount))
 
                 kind =
-                    if model.newEntry.kind == Just "DEPOSIT" then
-                        DEPOSIT
-                    else
-                        PROFIT
+                    case model.newEntry.kind of
+                        Just "PROFIT" ->
+                            PROFIT
+
+                        Just "DEPOSIT" ->
+                            DEPOSIT
+
+                        _ ->
+                            PROFIT
 
                 entry =
                     Entry amount (Maybe.withDefault "0" model.newEntry.date) kind
