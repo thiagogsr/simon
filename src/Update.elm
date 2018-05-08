@@ -38,31 +38,22 @@ update msg model =
             let
                 oldEntryForm =
                     model.newEntry
-
-                updatedEntry =
-                    { oldEntryForm | amount = amount }
             in
-            ( { model | newEntry = updatedEntry }, Cmd.none )
+            ( { model | newEntry = { oldEntryForm | amount = amount } }, Cmd.none )
 
         EntryFormDate date ->
             let
                 oldEntryForm =
                     model.newEntry
-
-                updatedEntry =
-                    { oldEntryForm | date = date }
             in
-            ( { model | newEntry = updatedEntry }, Cmd.none )
+            ( { model | newEntry = { oldEntryForm | date = date } }, Cmd.none )
 
         EntryFormKind kind ->
             let
                 oldEntryForm =
                     model.newEntry
-
-                updatedEntry =
-                    { oldEntryForm | kind = kind }
             in
-            ( { model | newEntry = updatedEntry }, Cmd.none )
+            ( { model | newEntry = { oldEntryForm | kind = kind } }, Cmd.none )
 
         NoOp ->
             ( model, Cmd.none )
