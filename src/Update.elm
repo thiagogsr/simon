@@ -8,51 +8,50 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         AddEntry ->
-            ( { model | entries = model.entryForm :: model.entries }, Cmd.none )
+            let
+                amount =
+                    Result.withDefault 0 (String.toFloat (Maybe.withDefault "0" model.newEntry.amount))
+
+                kind =
+                    if model.newEntry.kind == Just "DEPOSIT" then
+                        DEPOSIT
+                    else
+                        PROFIT
+
+                entry =
+                    Entry amount (Maybe.withDefault "0" model.newEntry.date) kind
+            in
+            ( { model | entries = entry :: model.entries }, Cmd.none )
 
         EntryFormAmount amount ->
             let
                 oldEntryForm =
-                    model.entryForm
+                    model.newEntry
 
                 updatedEntry =
-                    case String.toFloat amount of
-                        Ok amount ->
-                            { oldEntryForm | amount = Just amount }
-
-                        Err error ->
-                            oldEntryForm
+                    { oldEntryForm | amount = Just amount }
             in
-            ( { model | entryForm = updatedEntry }, Cmd.none )
+            ( { model | newEntry = updatedEntry }, Cmd.none )
 
         EntryFormDate date ->
             let
                 oldEntryForm =
-                    model.entryForm
+                    model.newEntry
 
                 updatedEntry =
-                    if String.isEmpty date then
-                        oldEntryForm
-                    else
-                        { oldEntryForm | date = Just date }
+                    { oldEntryForm | date = Just date }
             in
-            ( { model | entryForm = updatedEntry }, Cmd.none )
+            ( { model | newEntry = updatedEntry }, Cmd.none )
 
         EntryFormKind kind ->
             let
                 oldEntryForm =
-                    model.entryForm
-
-                newKind =
-                    if kind == "PROFIT" then
-                        PROFIT
-                    else
-                        DEPOSIT
+                    model.newEntry
 
                 updatedEntry =
-                    { oldEntryForm | kind = Just newKind }
+                    { oldEntryForm | kind = Just kind }
             in
-            ( { model | entryForm = updatedEntry }, Cmd.none )
+            ( { model | newEntry = updatedEntry }, Cmd.none )
 
         NoOp ->
             ( model, Cmd.none )

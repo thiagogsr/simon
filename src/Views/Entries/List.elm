@@ -1,7 +1,6 @@
 module Views.Entries.List exposing (entries)
 
 import Html exposing (Html, div, table, tbody, td, text, th, thead, tr)
-import Maybe exposing (withDefault)
 import Models exposing (..)
 import Msgs exposing (Msg)
 
@@ -12,8 +11,8 @@ entries model =
         [ table []
             [ thead []
                 [ tr []
-                    [ th [] [ text "Date" ]
-                    , th [] [ text "Amount" ]
+                    [ th [] [ text "Amount" ]
+                    , th [] [ text "Date" ]
                     , th [] [ text "Kind" ]
                     ]
                 ]
@@ -25,7 +24,7 @@ entries model =
 entryRow : Entry -> Html Msg
 entryRow entry =
     tr []
-        [ td [] [ text (withDefault "" entry.date) ]
-        , td [] [ text (toString (withDefault 0 entry.amount)) ]
-        , td [] [ text (toString (withDefault PROFIT entry.kind)) ]
+        [ td [] [ text (toString entry.amount) ]
+        , td [] [ text entry.date ]
+        , td [] [ text (toString entry.kind) ]
         ]

@@ -8,19 +8,26 @@ type Kind
 
 type alias Model =
     { entries : List Entry
-    , entryForm : Entry
+    , newEntry : EntryForm
     }
 
 
 initialModel : Model
 initialModel =
     { entries = []
-    , entryForm = Entry Nothing Nothing Nothing
+    , newEntry = EntryForm Nothing Nothing Nothing
     }
 
 
 type alias Entry =
-    { amount : Maybe Float
+    { amount : Float
+    , date : String
+    , kind : Kind
+    }
+
+
+type alias EntryForm =
+    { amount : Maybe String
     , date : Maybe String
-    , kind : Maybe Kind
+    , kind : Maybe String
     }
