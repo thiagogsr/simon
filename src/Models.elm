@@ -1,5 +1,6 @@
 module Models exposing (..)
 
+import DateValidate exposing (ifInvalidDate)
 import Validate exposing (Validator, ifBlank)
 
 
@@ -37,7 +38,10 @@ modelValidator : Validator Error EntryForm
 modelValidator =
     Validate.all
         [ ifBlank .amount ( Amount, "Please enter an amount." )
-        , ifBlank .date ( Date, "Please enter a date." )
+        , Validate.firstError
+            [ ifBlank .date ( Date, "Please enter a date." )
+            , ifInvalidDate .date ( Date, "Please enter a valid date." )
+            ]
         , ifBlank .kind ( Kind, "Please select a kind." )
         ]
 
