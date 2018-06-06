@@ -4,8 +4,8 @@ import Validate exposing (Validator, ifTrue)
 
 
 isFloat : String -> Bool
-isFloat date =
-    case String.toFloat date of
+isFloat value =
+    case String.toFloat value of
         Ok _ ->
             True
 
